@@ -9,12 +9,10 @@ const Sidebar = () => {
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    console.log('true');
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    console.log('false');
   };
 
   return (
