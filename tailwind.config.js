@@ -12,6 +12,15 @@ module.exports = {
       },
       fontFamily: {
         sinoreta: ['Sinoreta', 'sans-serif'],
+        'noto-sans': ['NotoSans', 'sans'],
+      },
+      width: {
+        fit: 'fit-content',
+      },
+      colors: {
+        customGray: '#BCC2C4',
+        customDarkGray: '#727C86',
+        customGreen: '#26A34F',
       },
     },
   },
