@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NotificationItem from './NotificationItem';
 import { useNavigate } from 'react-router-dom';
 import logoutAPI from '../../services/api/logout';
@@ -6,6 +6,29 @@ import logoutAPI from '../../services/api/logout';
 const bellIcon = `${process.env.PUBLIC_URL}/images/notification/bell.png`;
 
 const NotificationList = ({ notifications, setNotifications }) => {
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `${process.env.REACT_APP_SERVER_DOMAIN}/api/group/events`,
+    );
+
+    eventSource.onmessage = (event) => {
+      const newNotification = JSON.parse(event.data);
+      setNotifications((prevNotifications) => [
+        ...prevNotifications,
+        newNotification,
+      ]);
+    };
+
+    eventSource.onerror = (error) => {
+      console.error('SSE 에러(EventSource failed):', error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [setNotifications]);
+
   const navigate = useNavigate();
 
   const handleLogout = async () => {
