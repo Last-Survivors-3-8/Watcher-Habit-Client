@@ -1,69 +1,55 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import HabitList from '../../components/habits/HabitList';
+import { useDispatch } from 'react-redux';
+import getGroup from '../../services/api/groupGet';
+import { clearHabitDetail } from '../../redux/habitSlice';
 import { useDailyHabits } from '../../hooks/useDailyHabits';
 import getCurrentDate from '../../utils/getCurrentDate';
-import HabitDetail from '../../components/habits/HabitDetail/HabitDetail';
-import { clearHabitDetail } from '../../redux/habitSlice';
+import HabitList from '../../components/habits/habitList/HabitList';
+import HabitDetailAndVerification from '../../components/habits/HabitDetailAndVerification';
 
 function Group() {
   const dispatch = useDispatch();
   const { groupId } = useParams('groupId');
-
-  useEffect(() => {
-    dispatch(clearHabitDetail());
-  }, [groupId, dispatch]);
-
   const currentDate = getCurrentDate();
+  const [groupInfo, setGroupInfo] = useState(null);
+
   const { dailyHabits, loading, error } = useDailyHabits(
     `${process.env.REACT_APP_SERVER_DOMAIN}/api/group/${groupId}/habitList?date=${currentDate}`,
   );
+
+  const fetchGroupInfo = async () => {
+    try {
+      dispatch(clearHabitDetail());
+
+      const data = await getGroup(groupId);
+
+      setGroupInfo(data);
+    } catch (error) {
+      console.error('Error fetching group info', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGroupInfo();
+  }, [groupId, dispatch]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className='min-h-screen flex flex-col bg-main-bg text-white bg-vignette'>
-      <div className='flex-1 flex justify-center items-center ml-[100px] mr-[100px]'>
-        <div className='flex'>
-          <div className='w-[400px] mr-4'>
-            <HabitList dailyHabits={dailyHabits}></HabitList>
-          </div>
-          <div className='w-[600px] ml-4 relative'>
-            <div className='h-[70vh] bg-main-dark-blue rounded-t-2xl z-0'>
-              <div className='flex h-full'>
-                <div
-                  style={{ width: '50%' }}
-                  className='bg-green-bg text-center rounded-t-2xl'
-                >
-                  <p
-                    className='text-2xl'
-                    style={{ transform: 'translateY(10px)' }}
-                  >
-                    상세 페이지
-                  </p>
-                </div>
-                <div
-                  style={{ width: '50%' }}
-                  className='bg-black text-center rounded-t-2xl'
-                >
-                  <p
-                    className='text-2xl'
-                    style={{ transform: 'translateY(10px)' }}
-                  >
-                    인증 페이지
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className='h-[70vh] overflow-y-auto absolute top-12 left-0 right-0 bg-dark-blue-bg rounded-3xl z-10'>
-              <HabitDetail />
-            </div>
-          </div>
+    <section className='min-h-screen flex flex-col bg-main-bg text-white'>
+      <div className='text-center pt-20 mr-20'>
+        <div className='inline-block'>
+          <h1 className='text-2xl'>{groupInfo.group.groupName}</h1>
+          <div className='w-full h-[2px] bg-white mt-2'></div>
         </div>
       </div>
-    </div>
+      <article className='flex mx-auto mt-10'>
+        <HabitList dailyHabits={dailyHabits} />
+        <HabitDetailAndVerification />
+      </article>
+    </section>
   );
 }
 
