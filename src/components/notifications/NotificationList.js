@@ -2,13 +2,16 @@ import React, { useEffect } from 'react';
 import NotificationItem from './NotificationItem';
 import { useNavigate } from 'react-router-dom';
 import logoutAPI from '../../services/api/logout';
+import getUserIdFromToken from '../../utils/getUserIdFromToken';
 
 const bellIcon = `${process.env.PUBLIC_URL}/images/notification/bell.png`;
+
+const loginUserId = getUserIdFromToken();
 
 const NotificationList = ({ notifications, setNotifications }) => {
   useEffect(() => {
     const eventSource = new EventSource(
-      `${process.env.REACT_APP_SERVER_DOMAIN}/api/group/events`,
+      `${process.env.REACT_APP_SERVER_DOMAIN}/api/group/events?userId=${loginUserId}`,
     );
 
     eventSource.onmessage = (event) => {
