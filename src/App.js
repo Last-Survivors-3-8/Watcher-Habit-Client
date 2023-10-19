@@ -13,7 +13,18 @@ import Loading from './lib/loading/Loading';
 import NotFound from './pages/NotFound';
 import ServerError from './pages/ServerError';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 10 * 60 * 1000,
+      cache: {
+        maxSize: 100,
+      },
+    },
+  },
+});
+
 const CreateOrEditHabit = lazy(() => import('./pages/CreateHabit'));
 
 function App() {
