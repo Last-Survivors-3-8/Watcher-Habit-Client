@@ -6,6 +6,7 @@ import getHabitAPI from '../../services/api/habit/getHabit';
 import patchGroupAPI from '../../services/api/group/patchGroup';
 import getButtonText from '../../lib/notification/getButtonText';
 import { setNotificationHabitDetail } from '../../redux/notificationHabitSlice';
+import NotificationContent from './NotificationContent';
 
 const commonButtonClass =
   'bg-dark-blue-bg text-white hover:text-green-txt text-sm mt-2 px-4 py-2 rounded-full';
@@ -87,7 +88,7 @@ const NotificationItem = ({
         <p className='text-sm text-gray-600 pr-1 pt-1'>{formattedDate}</p>
         <p className='text-sm text-gray-600 pr-1 pt-1'>{formattedTime}</p>
       </div>
-      <p className='text-center text-white text-sm mt-5'>{content}</p>
+      <NotificationContent content={content} />
       {renderButton()}
     </div>
   );
