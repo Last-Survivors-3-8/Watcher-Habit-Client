@@ -1,7 +1,7 @@
 import api from '../../../lib/api';
 
-const postGroupAPI = (body) => {
-  return api.post('/group', body, {
+const postGroupAPI = async (body) => {
+  return await api.post('/group', body, {
     withCredentials: true,
   });
 };
