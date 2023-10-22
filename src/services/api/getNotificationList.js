@@ -4,9 +4,8 @@ const getNotificationListAPI = async (userId) => {
   const response = await api.get(`/notification/${userId}`, {
     withCredentials: true,
   });
-  const notifications = response.data.data;
 
-  return notifications;
+  return response.data.notifications;
 };
 
 export default getNotificationListAPI;
