@@ -38,7 +38,7 @@ function Group() {
 
         setGroupInfo(data.group);
 
-        navigate(`/my-habit/${userInfo.nickname}`);
+        navigate(`/my-habit/${userInfo.data.nickname}`);
         return;
       }
 
