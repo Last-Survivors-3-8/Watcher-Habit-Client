@@ -52,7 +52,7 @@ const ApprovalItem = ({ watcher, isModal = false }) => {
 
   const updateStatus = async (newStatus) => {
     try {
-      await await patchHabitAPI(habitDetail._id, {
+      await patchHabitAPI(habitDetail._id, {
         approvalStatus: newStatus,
         approvalId: watcher._id,
       });
