@@ -1,7 +1,7 @@
 import api from '../../lib/api';
 
-const loginAPI = (email) => {
-  return api.post(
+const loginAPI = async (email) => {
+  return await api.post(
     '/auth/login',
     {
       email,
