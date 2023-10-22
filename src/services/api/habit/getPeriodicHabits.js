@@ -1,7 +1,7 @@
 import api from '../../../lib/api';
 
-const getPeriodicHabitsAPI = (userId, startDateStr, endDateStr) => {
-  return api.get(
+const getPeriodicHabitsAPI = async (userId, startDateStr, endDateStr) => {
+  return await api.get(
     `/habit/periodic/${userId}?startDate=${startDateStr}&endDate=${endDateStr}`,
     { withCredentials: true },
   );
