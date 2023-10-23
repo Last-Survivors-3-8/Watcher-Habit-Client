@@ -26,6 +26,7 @@ const Profile = () => {
     },
     {
       refetchInterval: 10000,
+      staleTime: 0,
     },
   );
 
