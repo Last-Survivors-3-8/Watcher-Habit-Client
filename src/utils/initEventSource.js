@@ -21,7 +21,7 @@ function initEventSource(onMessage, onError) {
 
     setTimeout(() => {
       initEventSource(onMessage, onError);
-    }, 5000);
+    }, 0);
 
     if (onError) {
       onError(error);
