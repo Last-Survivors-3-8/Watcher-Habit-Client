@@ -19,6 +19,10 @@ function initEventSource(onMessage, onError) {
 
     eventSource.close();
 
+    setTimeout(() => {
+      initEventSource(onMessage, onError);
+    }, 30000);
+
     if (onError) {
       onError(error);
     }
