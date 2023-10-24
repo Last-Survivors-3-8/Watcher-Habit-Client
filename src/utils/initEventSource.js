@@ -5,6 +5,7 @@ function initEventSource(onMessage, onError) {
 
   const eventSource = new EventSource(
     `${process.env.REACT_APP_SERVER_DOMAIN}/events?userId=${loginUserId}`,
+    { withCredentials: true },
   );
 
   eventSource.onmessage = function (event) {
