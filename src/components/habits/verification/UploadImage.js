@@ -18,7 +18,17 @@ const UploadImage = ({ habitId, endTime, isModal = false }) => {
   const habitDetail = useSelector(selectConditon);
 
   const onFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+
+    const MAX_SIZE = 5 * 1024 * 1024;
+
+    if (selectedFile.size > MAX_SIZE) {
+      setError('파일 크기가 5MB를 초과합니다.');
+      return;
+    }
+
+    setFile(selectedFile);
+    setError('');
   };
 
   const onUpload = async () => {
