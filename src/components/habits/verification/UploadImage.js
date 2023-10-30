@@ -67,6 +67,7 @@ const UploadImage = ({ habitId, endTime, isModal = false }) => {
         id='inputImage'
         type='file'
         onChange={onFileChange}
+        accept='.png, .jpg, .jpeg'
         style={{ display: 'none' }}
       />
     </>
