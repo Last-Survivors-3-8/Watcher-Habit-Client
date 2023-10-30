@@ -2,6 +2,7 @@ import getUserIdFromToken from './getUserIdFromToken';
 
 function initEventSource(onMessage, onError) {
   const loginUserId = getUserIdFromToken();
+  let reconnecting = false;
 
   const eventSource = new EventSource(
     `${process.env.REACT_APP_SERVER_DOMAIN}/events?userId=${loginUserId}`,
@@ -15,15 +16,18 @@ function initEventSource(onMessage, onError) {
   };
 
   eventSource.onerror = function (error) {
-    console.error('initEventSource error:', error);
+    if (!reconnecting) {
+      console.error('initEventSource error:', error);
+    }
 
     eventSource.close();
 
     setTimeout(() => {
+      reconnecting = false;
       initEventSource(onMessage, onError);
     }, 0);
 
-    if (onError) {
+    if (!reconnecting && onError) {
       onError(error);
     }
   };
