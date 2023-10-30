@@ -22,6 +22,8 @@ function initEventSource(onMessage, onError) {
 
     eventSource.close();
 
+    reconnecting = true;
+
     setTimeout(() => {
       reconnecting = false;
       initEventSource(onMessage, onError);
