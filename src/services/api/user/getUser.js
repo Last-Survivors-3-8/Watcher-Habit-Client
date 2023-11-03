@@ -1,7 +1,7 @@
 import api from '../../../lib/api';
 
-const getUserInfoAPI = (userId, include = '', withUserData = true) => {
-  return api.get(`/user/${userId}`, {
+const getUserInfoAPI = async (userId, include = '', withUserData = true) => {
+  return await api.get(`/user/${userId}`, {
     params: {
       include,
       withUserData,

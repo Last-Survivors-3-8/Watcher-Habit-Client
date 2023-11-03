@@ -5,7 +5,8 @@ const useFetchUserData = (userId) => {
   const fetchUserData = async () => {
     try {
       const response = await getUserInfoAPI(userId, 'group', true);
-      return response.groups.map((group) => ({
+
+      return response.data.groups.map((group) => ({
         groupId: group._id,
         groupName: group.groupName,
       }));

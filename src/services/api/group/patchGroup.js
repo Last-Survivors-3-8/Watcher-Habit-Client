@@ -1,7 +1,7 @@
 import api from '../../../lib/api';
 
-const patchGroupAPI = (groupId, body) => {
-  return api.patch(`/group/${groupId}/members`, body, {
+const patchGroupAPI = async (groupId, body) => {
+  return await api.patch(`/group/${groupId}/members`, body, {
     withCredentials: true,
   });
 };

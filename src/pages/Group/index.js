@@ -30,19 +30,19 @@ function Group() {
       dispatch(clearHabitDetail());
       dispatch(clearNotificationHabitDetail());
 
-      const data = await getGroupAPI(groupId);
+      const response = await getGroupAPI(groupId);
 
-      if (!data.isMember) {
+      if (!response.data.isMember) {
         const userId = getUserIdFromToken();
         const userInfo = await getUserInfoAPI(userId);
 
-        setGroupInfo(data.group);
+        setGroupInfo(response.data.group);
 
-        navigate(`/my-habit/${userInfo.nickname}`);
+        navigate(`/my-habit/${userInfo.data.nickname}`);
         return;
       }
 
-      setGroupInfo(data);
+      setGroupInfo(response.data);
     } catch (error) {
       navigate('/404');
     }

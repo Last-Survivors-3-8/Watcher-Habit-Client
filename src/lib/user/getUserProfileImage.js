@@ -4,7 +4,7 @@ const getUserProfileImage = async (userId) => {
   try {
     const user = await getUserInfoAPI(userId);
 
-    return user.profileImageUrl;
+    return user.data.profileImageUrl;
   } catch (error) {
     throw error;
   }

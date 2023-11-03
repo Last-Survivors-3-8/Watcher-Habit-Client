@@ -12,7 +12,7 @@ const Logo = () => {
       try {
         const userId = getUserIdFromToken();
         const userInfo = await getUserInfoAPI(userId);
-        setNickname(userInfo.nickname);
+        setNickname(userInfo.data.nickname);
       } catch (error) {
         console.error('Logo error:', error);
       }

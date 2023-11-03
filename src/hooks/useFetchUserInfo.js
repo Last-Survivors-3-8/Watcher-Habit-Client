@@ -8,7 +8,7 @@ const useFetchUserInfo = (userId) => {
     const fetchData = async () => {
       try {
         const userInfo = await getUserInfoAPI(userId);
-        setNickname(userInfo.nickname);
+        setNickname(userInfo.data.nickname);
       } catch (error) {
         console.error('useFetchUserInfo error:', error);
       }
