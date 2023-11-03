@@ -12,13 +12,15 @@ function initEventSource(onMessage, onError) {
   eventSource.onmessage = function (event) {
     const notification = JSON.parse(event.data);
 
+    if (notification.type === 'setHeader') {
+      return;
+    }
+
     onMessage(notification);
   };
 
   eventSource.onerror = function (error) {
-    if (!reconnecting) {
-      console.error('initEventSource error:', error);
-    }
+    if (reconnecting) return;
 
     eventSource.close();
 
